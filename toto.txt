@@ -1,0 +1,1 @@
+Maintenant que nous avons défini notre interface et configuré Retrofit, nous pouvons créer une méthode pour récupérer les données de l'API. Dans cet exemple, nous allons récupérer une liste de posts à partir de l'API JSONPlaceholder.

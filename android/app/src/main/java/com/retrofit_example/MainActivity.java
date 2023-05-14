@@ -5,6 +5,12 @@ import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint;
 import com.facebook.react.defaults.DefaultReactActivityDelegate;
 
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class MainActivity extends ReactActivity {
 
   /**
@@ -32,4 +38,34 @@ public class MainActivity extends ReactActivity {
         DefaultNewArchitectureEntryPoint.getConcurrentReactEnabled() // concurrentRootEnabled
         );
   }
+
+
+  // <- add
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        JsonPlaceholderApi api = ApiClient.getClient().create(JsonPlaceholderApi.class);
+
+        Call<List<Post>> call = api.getPosts();
+        call.enqueue(new Callback<List<Post>>() {
+            @Override
+            public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {
+                if (response.isSuccessful()) {
+                    List<Post> posts = response.body();
+                    for (Post post : posts) {
+                        Log.d("MainActivity", post.toString());
+                    }
+                } else {
+                    Log.d("MainActivity", "Error: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Post>> call, Throwable t) {
+                Log.d("MainActivity", "Error: " + t.getMessage());
+            }
+        });
+    }
 }
