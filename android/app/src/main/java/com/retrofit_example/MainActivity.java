@@ -1,5 +1,8 @@
 package com.retrofit_example;
 
+import android.util.Log;
+import android.os.Bundle;
+
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint;
@@ -52,13 +55,16 @@ public class MainActivity extends ReactActivity {
         call.enqueue(new Callback<List<Post>>() {
             @Override
             public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {
-                if (response.isSuccessful()) {
-                    List<Post> posts = response.body();
+                List<Post> posts = response.body();
+
+                System.out.println("Hello from java");
+
+                if (posts != null) {
                     for (Post post : posts) {
                         Log.d("MainActivity", post.toString());
                     }
                 } else {
-                    Log.d("MainActivity", "Error: " + response.code());
+                    Log.d("MainActivity", "Response body is null.");
                 }
             }
 

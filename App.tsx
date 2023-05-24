@@ -11,6 +11,7 @@ class App extends Component {
     };
   }
   componentDidMount() {
+    console.log('hello bg');
     axios
       .get('https://jsonplaceholder.typicode.com/posts')
       .then((response: {data: any}) => {
